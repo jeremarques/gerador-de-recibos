@@ -191,10 +191,56 @@
         </div>
 
         <div class="no-print" style="margin-top: 30px; text-align: center;">
-            <button onclick="window.print()" style="background-color: #2c5aa0; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+            <button onclick="downloadPDF()" style="background-color: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+                Baixar Recibo (PDF)
+            </button>
+            <button onclick="window.print()" style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
                 Imprimir Recibo
             </button>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script>
+        function downloadPDF() {
+            // Esconde os botões durante a captura
+            const buttons = document.querySelector('.no-print');
+            buttons.style.display = 'none';
+            
+            // Captura o elemento do recibo
+            const elemento = document.querySelector('.recibo');
+            
+            html2canvas(elemento, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+                // Restaura os botões
+                buttons.style.display = 'block';
+                
+                // Cria o PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                // Calcula dimensões para ajustar à página
+                const imgWidth = 210; // A4 width in mm
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // Adiciona a imagem ao PDF
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                
+                // Faz o download
+                pdf.save('recibo.pdf');
+            }).catch(error => {
+                // Restaura os botões em caso de erro
+                buttons.style.display = 'block';
+                console.error('Erro ao gerar PDF:', error);
+                alert('Erro ao gerar PDF. Tente usar o botão Imprimir e salvar como PDF.');
+            });
+        }
+    </script>
 </body>
 </html>
