@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .recibo {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border: 3px solid #333;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .titulo {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c5aa0;
+            letter-spacing: 2px;
+        }
+        .numero {
+            border: 2px solid #333;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .valor {
+            border: 2px solid #333;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .campo {
+            margin-bottom: 15px;
+        }
+        .campo label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .campo input, .campo textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .campo textarea {
+            height: 60px;
+            resize: vertical;
+        }
+        .linha-dupla {
+            display: flex;
+            gap: 20px;
+        }
+        .linha-dupla .campo {
+            flex: 1;
+        }
+        .linha-tripla {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .linha-tripla .campo {
+            flex: 1;
+        }
+        .underline {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .assinatura {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .linha-assinatura {
+            border-bottom: 1px solid #333;
+            width: 300px;
+            margin: 20px auto;
+            height: 50px;
+        }
+        .dados-pessoa {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .dados-item {
+            text-align: center;
+        }
+        .dados-item .valor-campo {
+            border-bottom: 1px solid #333;
+            padding: 5px;
+            margin-bottom: 5px;
+            min-width: 150px;
+            display: inline-block;
+        }
+        @media print {
+            body {
+                background-color: white;
+                margin: 0;
+            }
+            .recibo {
+                box-shadow: none;
+                border: 2px solid #333;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="recibo">
+        <div class="header">
+            <div class="titulo">RECIBO</div>
+            <div class="numero">Nº <input type="text" style="border:none; width:100px; text-align:center; font-weight:bold;" placeholder="0000"></div>
+            <div class="valor">R$ <input type="text" style="border:none; width:120px; text-align:center; font-weight:bold;" placeholder="0,00"></div>
+        </div>
+
+        <div class="campo">
+            <label>Recebi (emos) De:</label>
+            <input type="text" placeholder="Nome da pessoa/empresa">
+        </div>
+
+        <div class="campo">
+            <label>A quantia de:</label>
+            <input type="text" placeholder="Valor por extenso">
+        </div>
+
+        <div class="linha-dupla">
+            <div class="campo" style="flex: 3;">
+                <label>Correspondente a:</label>
+                <input type="text" placeholder="">
+            </div>
+            <div class="campo">
+                <label>Mês de Ref:</label>
+                <input type="text" placeholder="(MÊS/ANO)">
+            </div>
+        </div>
+
+        <div class="linha-tripla">
+            <div class="campo" style="flex: 2;">
+                <label>e para clareza firmo (amos) o presente</label>
+            </div>
+            <div class="campo">
+                <label>Local:</label>
+                <input type="text" placeholder="Cidade (Estado)">
+            </div>
+            <div class="campo">
+                <label>Data:</label>
+                <input type="text" placeholder="DD de Mês de AAAA">
+            </div>
+        </div>
+
+        <div class="dados-pessoa">
+            <div class="dados-item">
+                <div class="valor-campo">
+                    <input type="text" style="border:none; width:100%; text-align:center;" placeholder="Nome completo">
+                </div>
+                <div><strong>NOME</strong></div>
+            </div>
+            <div class="dados-item">
+                <div class="valor-campo">
+                    <input type="text" style="border:none; width:100%; text-align:center;" placeholder="000.000.000-00">
+                </div>
+                <div><strong>RG</strong></div>
+            </div>
+            <div class="dados-item">
+                <div class="valor-campo">
+                    <input type="text" style="border:none; width:100%; text-align:center;" placeholder="000.000.000-00">
+                </div>
+                <div><strong>CPF</strong></div>
+            </div>
+        </div>
+
+        <div class="assinatura">
+            <div class="linha-assinatura"></div>
+            <div><strong>Assinatura</strong></div>
+        </div>
+
+        <div class="no-print" style="margin-top: 30px; text-align: center;">
+            <button onclick="window.print()" style="background-color: #2c5aa0; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+                Imprimir Recibo
+            </button>
+        </div>
+    </div>
+</body>
+</html>
