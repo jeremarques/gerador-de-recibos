@@ -202,7 +202,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
+
     <script>
         function downloadPDF() {
             // Esconde os botões durante a captura
@@ -213,9 +213,11 @@
             const elemento = document.querySelector('.recibo');
             
             html2canvas(elemento, {
-                scale: 2,
+                scale: 1.5, // Reduzido de 2 para 1.5
                 useCORS: true,
-                backgroundColor: '#ffffff'
+                backgroundColor: '#ffffff',
+                width: elemento.offsetWidth,
+                height: elemento.offsetHeight
             }).then(canvas => {
                 // Restaura os botões
                 buttons.style.display = 'block';
@@ -225,12 +227,16 @@
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 
                 // Calcula dimensões para ajustar à página
-                const imgWidth = 210; // A4 width in mm
+                const imgWidth = 200; // Reduzido para deixar margens
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
                 
-                // Adiciona a imagem ao PDF
-                const imgData = canvas.toDataURL('image/png');
-                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                // Centraliza na página
+                const x = (210 - imgWidth) / 2;
+                const y = 10;
+                
+                // Converte para JPEG com compressão para reduzir tamanho
+                const imgData = canvas.toDataURL('image/jpeg', 0.8); // 80% qualidade
+                pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
                 
                 // Faz o download
                 pdf.save('recibo.pdf');
